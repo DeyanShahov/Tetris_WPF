@@ -24,6 +24,12 @@ namespace Tetris_WPF
             {
                 currentBlock = value;
                 currentBlock.Reset();
+
+                for (int i = 0; i < 2; i++)
+                {
+                    currentBlock.Move(1, 0);
+                    if (!BlockFits()) currentBlock.Move(-1, 0);
+                }
             }
         }
 
@@ -55,7 +61,7 @@ namespace Tetris_WPF
             if (!BlockFits()) CurrentBlock.RotateCW();
         }
 
-        public void MoveBlockLEft()
+        public void MoveBlockLeft()
         {
             CurrentBlock.Move(0, -1);
 
@@ -69,7 +75,10 @@ namespace Tetris_WPF
             if (!BlockFits()) CurrentBlock?.Move(0, -1);
         }
 
-        private bool IsGameOver() => !(GameGrid.IsRowEmpty(0) && GameGrid.IsRowEmpty(1));
+        private bool IsGameOver()
+        {
+            return !(GameGrid.IsRowEmpty(0) && GameGrid.IsRowEmpty(1));
+        }
 
         private void PlaceBlock()
         {
