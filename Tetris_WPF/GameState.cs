@@ -1,4 +1,7 @@
-﻿namespace Tetris_WPF
+﻿using System;
+using System.Text.RegularExpressions;
+
+namespace Tetris_WPF
 {
     public class GameState
     {
@@ -122,6 +125,36 @@
                 CurrentBlock.Move(-1, 0);
                 PlaceBlock();
             }
+        }
+
+        private int TileDropDistance(Position p)
+        {
+            int drop = 0;
+
+            while (GameGrid.IsEmpty(p.Row + drop + 1, p.Column))
+            {
+                drop++;
+            }
+
+            return drop;
+        }
+
+        public int BlockDropDistance()
+        {
+            int drop = GameGrid.Rows;
+
+            foreach (Position p in CurrentBlock.TilePositions())
+            {
+                drop = Math.Min(drop, TileDropDistance(p));
+            }
+
+            return drop;
+        }
+
+        public void DropBlock()
+        {
+            CurrentBlock.Move(BlockDropDistance(), 0);
+            PlaceBlock();
         }
 
     }
