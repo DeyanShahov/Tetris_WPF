@@ -75,10 +75,8 @@ namespace Tetris_WPF
             if (!BlockFits()) CurrentBlock?.Move(0, -1);
         }
 
-        private bool IsGameOver()
-        {
-            return !(GameGrid.IsRowEmpty(0) && GameGrid.IsRowEmpty(1));
-        }
+        private bool IsGameOver() => !(GameGrid.IsRowEmpty(0) && GameGrid.IsRowEmpty(1));
+
 
         private void PlaceBlock()
         {
