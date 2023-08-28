@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Tetris_WPF
+﻿namespace Tetris_WPF
 {
     public class GameState
     {
@@ -15,6 +9,7 @@ namespace Tetris_WPF
             GameGrid = new GameGrid(22, 10);
             BlockQueue = new BlockQueue();
             CurrentBlock = BlockQueue.GetAndUpdate();
+            CanHold = true;
         }
 
         public Block CurrentBlock
@@ -37,6 +32,27 @@ namespace Tetris_WPF
         public BlockQueue BlockQueue { get; }
         public bool GameOver { get; private set; }
         public int Score { get; private set; }
+        public Block HeldBlock { get; private set; }
+        public bool CanHold { get; private set; }
+
+        public void HoldBlock()
+        {
+            if (!CanHold) return;
+
+            if (HeldBlock == null)
+            {
+                HeldBlock = CurrentBlock;
+                CurrentBlock = BlockQueue.GetAndUpdate();
+            }
+            else
+            {
+                Block tmp = CurrentBlock;
+                CurrentBlock = HeldBlock;
+                HeldBlock = tmp;
+            }
+
+            CanHold = false;
+        }
 
 
         private bool BlockFits()
@@ -90,7 +106,11 @@ namespace Tetris_WPF
             Score += GameGrid.ClearFullRows();
 
             if (IsGameOver()) GameOver = true;
-            else CurrentBlock = BlockQueue.GetAndUpdate();
+            else
+            {
+                CurrentBlock = BlockQueue.GetAndUpdate();
+                CanHold = true;
+            }
         }
 
         public void MoveBlockDown()
