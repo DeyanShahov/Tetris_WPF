@@ -36,6 +36,8 @@ namespace Tetris_WPF
         public GameGrid GameGrid { get; }
         public BlockQueue BlockQueue { get; }
         public bool GameOver { get; private set; }
+        public int Score { get; private set; }
+
 
         private bool BlockFits()
         {
@@ -85,7 +87,7 @@ namespace Tetris_WPF
                 GameGrid[p.Row, p.Column] = CurrentBlock.Id;
             }
 
-            GameGrid.ClearFullRows();
+            Score += GameGrid.ClearFullRows();
 
             if (IsGameOver()) GameOver = true;
             else CurrentBlock = BlockQueue.GetAndUpdate();

@@ -111,6 +111,7 @@ namespace Tetris_WPF
             DrawGrid(gameState.GameGrid);
             DrawBlock(gameState.CurrentBlock);
             DrawNextBlock(gameState.BlockQueue);
+            ScoreText.Text = $"Score: {gameState.Score}";
         }
 
         private async Task GameLoop()
@@ -125,6 +126,7 @@ namespace Tetris_WPF
             }
 
             GameOverMenu.Visibility = Visibility.Visible;
+            FinalScoreText.Text = $"Score: {gameState.Score}";
         }
 
 
