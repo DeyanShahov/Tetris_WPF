@@ -91,6 +91,7 @@ namespace Tetris_WPF
                 {
                     int id = grid[r, c];
                     imageControls[r, c].Opacity = 1;
+                    //imageControls[r, c].Opacity = gameState.BlockOpacity;
                     imageControls[r, c].Source = tileImages[id];
                 }
             }
@@ -100,7 +101,8 @@ namespace Tetris_WPF
         {
             foreach (Position p in block.TilePositions())
             {
-                imageControls[p.Row, p.Column].Opacity = 1;
+                //imageControls[p.Row, p.Column].Opacity = 1;
+                imageControls[p.Row, p.Column].Opacity = gameState.BlockOpacity;
                 imageControls[p.Row, p.Column].Source = tileImages[block.Id];
             }
         }
@@ -131,6 +133,8 @@ namespace Tetris_WPF
 
         private void Draw(GameState gameState)
         {
+            //ShowHideMenu(gameState.Pause);
+
             DrawGrid(gameState.GameGrid);
             DrawGhostBlock(gameState.CurrentBlock);
             DrawBlock(gameState.CurrentBlock);
@@ -143,7 +147,7 @@ namespace Tetris_WPF
         {
             Draw(gameState);
 
-            while (!gameState.GameOver)
+            while (!gameState.GameOver && GameSetingsMenu.Visibility == Visibility.Hidden)
             {
                 int delay = Math.Max(minDelay, maxDelay - (gameState.Score * delayDecrease));
                 await Task.Delay(delay);
@@ -151,8 +155,11 @@ namespace Tetris_WPF
                 Draw(gameState);
             }
 
-            GameOverMenu.Visibility = Visibility.Visible;
-            FinalScoreText.Text = $"Score: {gameState.Score}";
+            if (GameSetingsMenu.Visibility == Visibility.Hidden)
+            {
+                GameOverMenu.Visibility = Visibility.Visible;
+                FinalScoreText.Text = $"Score: {gameState.Score}";
+            }
         }
 
 
@@ -183,11 +190,44 @@ namespace Tetris_WPF
                 case Key.Space:
                     gameState.DropBlock();
                     break;
+                case Key.M:
+                    //gameState.ShowMenu();
+                    ShowHideMenu();
+                    break;
                 default:
                     return;
             }
 
             Draw(gameState);
+        }
+
+        //public async void ShowHideMenu(bool isPause)
+        //{
+        //    if (!isPause)
+        //    {
+
+        //        GameSetingsMenu.Visibility = Visibility.Visible;
+
+        //    }
+        //    else
+        //    {
+
+        //        GameSetingsMenu.Visibility = Visibility.Hidden;
+        //        await GameLoop();
+        //    }
+        //}
+
+        public async void ShowHideMenu()
+        {
+            if (GameSetingsMenu.Visibility == Visibility.Hidden)
+            {
+                GameSetingsMenu.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                GameSetingsMenu.Visibility = Visibility.Hidden;
+                await GameLoop();
+            }
         }
 
         private async void GameCanvas_Loaded(object sender, RoutedEventArgs e)

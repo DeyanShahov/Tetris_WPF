@@ -23,9 +23,20 @@
         </Grid.Background>
 
         <Viewbox Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
-            <Canvas x:Name="GameCanvas" Background="Black" Width="250" Height="510"
-                    ClipToBounds="True" Loaded="GameCanvas_Loaded"/>
+            <Canvas x:Name="GameCanvas" Width="250" Background="Black" Height="510"
+                    ClipToBounds="True" Loaded="GameCanvas_Loaded">
+            </Canvas>
         </Viewbox>
+
+        <!--<Viewbox Grid.Row="1" Grid.Column="2" Margin="0,0,0,20">
+            <Canvas x:Name="GameCanvas2" Width="250" Height="510"
+                    ClipToBounds="True" Loaded="GameCanvas_Loaded">
+                <Canvas.Background>
+                    <ImageBrush ImageSource="Assets/Untitled1.png"/>
+                </Canvas.Background>
+            </Canvas>
+        </Viewbox>-->
+
 
         <TextBlock x:Name="ScoreText" Grid.Row="0" Grid.Column="1" Text="Score: " Margin="0, 10" TextAlignment="Center" />
 
@@ -46,6 +57,17 @@
                 <TextBlock x:Name="FinalScoreText" Text="Score: " FontSize="35" TextAlignment="Center"/>
 
                 <Button Content="Play Agein" Background="LightGreen" Margin="0,20,0,0" Padding="5" Click="PlayAgain_Click"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid x:Name="GameSetingsMenu" Background="#CC000000"  Grid.RowSpan="2" Grid.ColumnSpan="3" 
+              Visibility="Hidden">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="Game Menu" FontSize="48" TextAlignment="Center"/>
+
+                <Button Content="Option 1" Background="Blue" Margin="0,20,0,0" Padding="5" Click="PlayAgain_Click"/>
+                <Button Content="Option 2" Background="Blue" Margin="0,20,0,0" Padding="5" Click="PlayAgain_Click"/>
+                <Button Content="Option 3" Background="Blue" Margin="0,20,0,0" Padding="5" Click="PlayAgain_Click"/>
             </StackPanel>
         </Grid>
     </Grid>

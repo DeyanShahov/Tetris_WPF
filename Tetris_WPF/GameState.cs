@@ -13,6 +13,7 @@ namespace Tetris_WPF
             BlockQueue = new BlockQueue();
             CurrentBlock = BlockQueue.GetAndUpdate();
             CanHold = true;
+            Pause = false;
         }
 
         public Block CurrentBlock
@@ -37,6 +38,9 @@ namespace Tetris_WPF
         public int Score { get; private set; }
         public Block HeldBlock { get; private set; }
         public bool CanHold { get; private set; }
+        public bool Pause  { get; private set; }
+        public double BlockOpacity { get; private set; } = 1;
+
 
         public void HoldBlock()
         {
@@ -56,7 +60,6 @@ namespace Tetris_WPF
 
             CanHold = false;
         }
-
 
         private bool BlockFits()
         {
@@ -98,6 +101,20 @@ namespace Tetris_WPF
 
         private bool IsGameOver() => !(GameGrid.IsRowEmpty(0) && GameGrid.IsRowEmpty(1));
 
+        private bool IsPause() => Pause; 
+
+        public void ShowMenu()
+        {
+            if (!IsPause())
+            {
+                Pause = true;
+            }
+            else
+            {
+                Pause = false;
+            }
+        }
+
 
         private void PlaceBlock()
         {
@@ -106,7 +123,14 @@ namespace Tetris_WPF
                 GameGrid[p.Row, p.Column] = CurrentBlock.Id;
             }
 
-            Score += GameGrid.ClearFullRows();
+            int rowCleared = GameGrid.ClearFullRows();
+
+            if (rowCleared == 1) Score++;
+            else if(rowCleared == 2) Score += 3;
+            else if(rowCleared == 3) Score += 5;
+            else if(rowCleared == 4) Score += 8;
+
+            if (rowCleared != 0 && BlockOpacity > 0) BlockOpacity -= 0.01;
 
             if (IsGameOver()) GameOver = true;
             else
@@ -156,6 +180,8 @@ namespace Tetris_WPF
             CurrentBlock.Move(BlockDropDistance(), 0);
             PlaceBlock();
         }
+
+   
 
     }
 }
