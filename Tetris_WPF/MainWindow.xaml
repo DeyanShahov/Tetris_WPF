@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        FocusManager.IsFocusScope="True"
         xmlns:local="clr-namespace:Tetris_WPF"
         mc:Ignorable="d"
         Title="TetrisWPF" Height="600" Width="800" MinHeight="600" MinWidth="600" Foreground="White" FontFamily="Segoe UI Light" FontSize="28" KeyDown="Window_KeyDown">
@@ -70,5 +71,6 @@
                 <Button Content="Option 3" Background="Blue" Margin="0,20,0,0" Padding="5" Click="PlayAgain_Click"/>
             </StackPanel>
         </Grid>
+        <Button x:Name="AddImageButton" Content="Button" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="SelectImage_Click"/>
     </Grid>
 </Window>

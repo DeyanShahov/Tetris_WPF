@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -241,6 +242,31 @@ namespace Tetris_WPF
             GameOverMenu.Visibility = Visibility.Hidden;
             await GameLoop();
         }
+
+
+        private void SelectImage_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            openFileDialog.Filter = "Изображения (*.jpg;*.jpeg;*.png;*.gif)|*.jpg;*.jpeg;*.png;*.gif|Всички файлове (*.*)|*.*";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string selectedImagePath = openFileDialog.FileName;
+               
+                if (File.Exists(selectedImagePath))
+                {
+                    Uri uri = new Uri(selectedImagePath);
+                    BitmapImage bitmap = new BitmapImage(uri);
+                    ImageBrush imageBrush = new ImageBrush(bitmap);
+
+                    GameCanvas.Background = imageBrush;
+                    AddImageButton.Focusable = false;
+                }
+
+            }
+
+        }
+
 
     }
 }
