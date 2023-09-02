@@ -71,6 +71,7 @@
                 <Button Content="Option 3" Background="Blue" Margin="0,20,0,0" Padding="5" Click="PlayAgain_Click"/>
             </StackPanel>
         </Grid>
-        <Button x:Name="AddImageButton" Content="Button" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="SelectImage_Click"/>
+        <Button x:Name="AddImageButton" Content="Background" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="SelectImage_Click" />
+        <Button x:Name="StopShadowBlock" Content="SBlock" HorizontalAlignment="Left" Margin="172,0,0,0" VerticalAlignment="Center"  Click="SetStageSBlock_Click" />
     </Grid>
 </Window>

@@ -49,6 +49,7 @@ namespace Tetris_WPF
         private readonly int maxDelay = 1000;
         private readonly int minDelay = 75;
         private readonly int delayDecrease = 25;
+        private bool DrawGhostBlockState = true;
 
 
         private GameState gameState = new GameState();
@@ -137,7 +138,7 @@ namespace Tetris_WPF
             //ShowHideMenu(gameState.Pause);
 
             DrawGrid(gameState.GameGrid);
-            DrawGhostBlock(gameState.CurrentBlock);
+            if(DrawGhostBlockState) DrawGhostBlock(gameState.CurrentBlock);
             DrawBlock(gameState.CurrentBlock);
             DrawNextBlock(gameState.BlockQueue);
             DrawHeldBlock(gameState.HeldBlock);
@@ -267,6 +268,12 @@ namespace Tetris_WPF
 
         }
 
+        private void SetStageSBlock_Click(object sender, RoutedEventArgs e)
+        {
+            if (DrawGhostBlockState == true) DrawGhostBlockState = false;
+            else DrawGhostBlockState = true;
 
+            StopShadowBlock.Focusable = false;
+        }
     }
 }
